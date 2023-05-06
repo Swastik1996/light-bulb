@@ -11,35 +11,84 @@ export class LightBulbComponent implements OnInit {
 
   nodes:Node[] = [];
   links:Edge[] = [];
-  n:number = 1;
-  zoomToFit$: Subject<boolean> = new Subject();
+  n:number = 5;
+  randomInt = (min:number, max:number) =>
+    Math.floor(Math.random() * (max - min + 1)) + min;
 
   constructor() {}
   ngOnInit(): void {
-    this.showGraph(this.n);
+    this.showGraph();
   }
 
-  fitGraph() {
-      this.zoomToFit$.next(true)
+  // Observable for update
+  update$: Subject<any> = new Subject();
+
+  // Update function
+  updateChart(){
+      this.update$.next(true);
   }
 
-  showGraph(n:number): void {
+  flipNode(node:Node):Node{
+      if(node.label == 'A'){
+        node.label = 'B';
+        node.data.color = '#7aa3e5';
+      }
+      else if(node.label == 'B'){
+        node.label = 'A';
+        node.data.color = '#a8385d';
+      }
+      return node;
+  }
+
+  flipNodeWithId(id:string):void{
+    for(let i = 0; i < this.n; i++){
+        if(id == this.nodes[i].id){
+          this.nodes[i] = this.flipNode(this.nodes[i]);
+        }
+    }
+  }
+
+  click(node:Node):void{
+    console.log("Clicked: " + node);
+    this.flipNodeWithId(node.id);
+    for(let j =0; j < this.links.length; j++){
+      if(this.links[j].source == node.id){
+        this.flipNodeWithId(this.links[j].target);
+      }
+      else if(this.links[j].target == node.id){
+        this.flipNodeWithId(this.links[j].source);
+      }
+    }
+
+    this.updateChart();
+  }
+
+  updateSize(n:number): void{
     this.n = n;
+  }
+
+  showGraph(): void {
     this.nodes = [];
-    for(let i = 0; i < n; i++){
+    for(let i = 0; i < this.n; i++){
+      var x = this.randomInt(0, 1);
       this.nodes.push({
         id: String.fromCharCode('A'.charCodeAt(0) + i),
-        label: String.fromCharCode('A'.charCodeAt(0) + i)
+        label: String.fromCharCode('A'.charCodeAt(0) + x)
       });
     }
     this.links = [];
-    for(let i = 0; i < n - 1; i++){
-      this.links.push({
-        id: String.fromCharCode('a'.charCodeAt(0) + i),
-        source: String.fromCharCode('A'.charCodeAt(0) + i),
-        target: String.fromCharCode('A'.charCodeAt(0) + i + 1),
-        label: 'Edge'
-      });
+    for(let i = 0; i < this.n; i++){
+      for(let j = i + 1; j < this.n ; j++){
+        var x = this.randomInt(0, 1);
+        if(x == 1){
+          this.links.push({
+            id: String.fromCharCode('a'.charCodeAt(0) + i * this.n + j),
+            source: String.fromCharCode('A'.charCodeAt(0) + i),
+            target: String.fromCharCode('A'.charCodeAt(0) + j),
+            label: 'Edge'
+          });
+        }
+      }
     }
   }
 

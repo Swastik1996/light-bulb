@@ -4,6 +4,19 @@
   [nodes]="nodes"
   [links]="links"
   [autoCenter]="true"
+  [update$]="update$"
   layout="d3ForceDirected"
->
+  xmlns:svg="http://www.w3.org/1999/XSL/Transform">
+  <ng-template #nodeTemplate let-node>
+    <svg:g class="node" (click)="click(node)">
+      <svg:rect
+        [attr.width]="node.dimension.width"
+        [attr.height]="node.dimension.height"
+        [attr.fill]="node.data.color"
+      />
+      <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2">
+        {{node.id}}
+      </svg:text>
+    </svg:g>
+  </ng-template>
 </ngx-graph>

@@ -17,7 +17,11 @@ export class AppComponent {
   postForm(f:NgForm) {
       var res = new Map(Object.entries(f.value));
       this.value = <number>res.get("Size");
-      this.lightBulb.showGraph(this.value);
-      this.lightBulb.ngOnInit();
+      this.lightBulb.updateSize(this.value);
+      this.lightBulb.showGraph();
+  }
+
+  reset(){
+    this.lightBulb.showGraph();
   }
 }
