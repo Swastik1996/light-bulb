@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Edge, Node, ClusterNode } from '@swimlane/ngx-graph';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-light-bulb',
@@ -11,10 +12,15 @@ export class LightBulbComponent implements OnInit {
   nodes:Node[] = [];
   links:Edge[] = [];
   n:number = 1;
+  zoomToFit$: Subject<boolean> = new Subject();
 
   constructor() {}
   ngOnInit(): void {
     this.showGraph(this.n);
+  }
+
+  fitGraph() {
+      this.zoomToFit$.next(true)
   }
 
   showGraph(n:number): void {
@@ -32,7 +38,7 @@ export class LightBulbComponent implements OnInit {
         id: String.fromCharCode('a'.charCodeAt(0) + i),
         source: String.fromCharCode('A'.charCodeAt(0) + i),
         target: String.fromCharCode('A'.charCodeAt(0) + i + 1),
-        label: 'custom label'
+        label: 'Edge'
       });
     }
   }
