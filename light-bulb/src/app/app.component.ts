@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Edge, Node, ClusterNode } from '@swimlane/ngx-graph';
 import { FormsModule, NgForm } from '@angular/forms';
 import { LightBulbComponent } from "./light-bulb/light-bulb.component";
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-root',

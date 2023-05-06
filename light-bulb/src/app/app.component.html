@@ -1,8 +1,12 @@
-<form #f="ngForm" (submit)="postForm(f)">
-  <input type="number" name="Size" ngModel/>
-  <button>Submit</button>
-  <pre>{{value}}</pre>
-</form>
+<mat-toolbar color = "primary">
+  <form #f="ngForm" (submit)="postForm(f)">
+    <mat-form-field class="example-full-width">
+      <mat-label>Input Count of Nodes: </mat-label>
+      <input matInput type="number" name="Size" ngModel/>
+    </mat-form-field>
+    <button>Submit</button>
+  </form>
+</mat-toolbar>
 
-<app-light-bulb [n]="value"></app-light-bulb>
+<app-light-bulb></app-light-bulb>
 
