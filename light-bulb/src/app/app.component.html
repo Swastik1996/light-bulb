@@ -1,7 +1,8 @@
 <form #f="ngForm" (submit)="postForm(f)">
   <input type="number" name="Size" ngModel/>
   <button>Submit</button>
+  <pre>{{value}}</pre>
 </form>
 
-<app-light-bulb></app-light-bulb>
+<app-light-bulb [n]="value"></app-light-bulb>
 

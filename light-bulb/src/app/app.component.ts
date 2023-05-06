@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Edge, Node, ClusterNode } from '@swimlane/ngx-graph';
 import { FormsModule, NgForm } from '@angular/forms';
+import { LightBulbComponent } from "./light-bulb/light-bulb.component";
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,13 @@ import { FormsModule, NgForm } from '@angular/forms';
 })
 export class AppComponent {
   title = 'light-bulb';
+  @ViewChild(LightBulbComponent) lightBulb:LightBulbComponent = new LightBulbComponent();
+  value = 1;
 
-
-    postForm(f:NgForm) {
-        //Log user input in console
-        console.log(f.value)
-    }
+  postForm(f:NgForm) {
+      var res = new Map(Object.entries(f.value));
+      this.value = <number>res.get("Size");
+      this.lightBulb.showGraph(this.value);
+      this.lightBulb.ngOnInit();
+  }
 }

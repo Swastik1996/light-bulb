@@ -1,4 +1,4 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Edge, Node, ClusterNode } from '@swimlane/ngx-graph';
 
 @Component({
@@ -7,26 +7,27 @@ import { Edge, Node, ClusterNode } from '@swimlane/ngx-graph';
   styleUrls: ['./light-bulb.component.scss']
 })
 export class LightBulbComponent implements OnInit {
-    n = 3;
 
-    nodes:Node[] = [];
-    links:Edge[] = [];
-    mockArr:string[] = [];
+  nodes:Node[] = [];
+  links:Edge[] = [];
+  n:number = 1;
 
-  constructor() {
-
-
+  constructor() {}
+  ngOnInit(): void {
+    this.showGraph(this.n);
   }
 
-  ngOnInit(): void {
-    for(let i = 0; i < this.n; i++){
+  showGraph(n:number): void {
+    this.n = n;
+    this.nodes = [];
+    for(let i = 0; i < n; i++){
       this.nodes.push({
         id: String.fromCharCode('A'.charCodeAt(0) + i),
         label: String.fromCharCode('A'.charCodeAt(0) + i)
       });
     }
-
-    for(let i = 0; i < this.n - 1; i++){
+    this.links = [];
+    for(let i = 0; i < n - 1; i++){
       this.links.push({
         id: String.fromCharCode('a'.charCodeAt(0) + i),
         source: String.fromCharCode('A'.charCodeAt(0) + i),
@@ -35,5 +36,7 @@ export class LightBulbComponent implements OnInit {
       });
     }
   }
+
+
 
 }
