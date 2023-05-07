@@ -5,7 +5,7 @@
   [links]="links"
   [autoCenter]="true"
   [update$]="update$"
-  layout="d3ForceDirected"
+  layout="dagre"
   xmlns:svg="http://www.w3.org/1999/XSL/Transform">
   <ng-template #nodeTemplate let-node>
     <svg:g class="node" (click)="click(node)">

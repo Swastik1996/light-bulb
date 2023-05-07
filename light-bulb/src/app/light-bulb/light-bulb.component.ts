@@ -29,13 +29,19 @@ export class LightBulbComponent implements OnInit {
   }
 
   flipNode(node:Node):Node{
+      console.log("Flipping Node: " + node.id);
+      if(node.data.color == '#a8385d'){
+        node.data.color = '#7aa3e5';
+      }
+      else if(node.data.color == '#7aa3e5'){
+        node.data.color = '#a8385d';
+      }
+
       if(node.label == 'A'){
         node.label = 'B';
-        node.data.color = '#7aa3e5';
       }
       else if(node.label == 'B'){
         node.label = 'A';
-        node.data.color = '#a8385d';
       }
       return node;
   }
@@ -49,7 +55,7 @@ export class LightBulbComponent implements OnInit {
   }
 
   click(node:Node):void{
-    console.log("Clicked: " + node);
+    console.log("Clicked: " + node.id);
     this.flipNodeWithId(node.id);
     for(let j =0; j < this.links.length; j++){
       if(this.links[j].source == node.id){
